@@ -7,7 +7,7 @@ const filesText = Array.from({ length: 20 }, (_, i) => `out${i}.txt`);
 // find unique usernames
 const getUniqueUsernames = () => {
   const uniqueUsernames = new Set();
-  filesText.forEach(function(file) {
+  filesText.forEach(function (file) {
     const fileContent = fs.readFileSync(path.join(directory, file), 'utf-8');
     const usernamesArray = fileContent.split('-');
     usernamesArray.forEach(name => uniqueUsernames.add(name));
@@ -18,10 +18,10 @@ const getUniqueUsernames = () => {
 // find usernames repeating in all files
 const getAllOccurrences = () => {
   let repeatedNames = null;
-  filesText.forEach(function(file) {
+  filesText.forEach(function (file) {
     const fileContent = fs.readFileSync(path.join(directory, file), 'utf-8');
     const commonForAllFiles = new Set(fileContent.split('-'));
-    if (repeatedNames === null) {
+    if (!repeatedNames) {
       repeatedNames = commonForAllFiles;
     } else {
       repeatedNames = new Set([...repeatedNames].filter(username => commonForAllFiles.has(username)));
@@ -33,11 +33,11 @@ const getAllOccurrences = () => {
 // find usernames repeating in at least 10 files
 const getOccurrencesIn10Files = () => {
   const usernameCounter = new Map();
-  filesText.forEach(function(file) {
+  filesText.forEach(function (file) {
     const fileContent = fs.readFileSync(path.join(directory, file), 'utf-8');
     const namesArray = fileContent.split('-');
 
-    namesArray.forEach(function(name) {
+    namesArray.forEach(function (name) {
       const count = usernameCounter.get(name) || 0;
       usernameCounter.set(name, count + 1);
     })
